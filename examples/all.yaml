@@ -1,0 +1,22 @@
+# firewall-rule-example.yaml
+apiVersion: my.firewall/v1
+kind: FirewallRule
+metadata:
+  name: custom-firewall
+spec:
+  nodeSelector:
+    node-role.kubernetes.io/worker: ""
+  ufwOptions:
+    logging: medium
+    defaultPolicies:
+      incoming: deny
+      outgoing: allow
+    profiles:
+      - name: OpenSSH
+        action: allow
+      - name: Apache
+        action: allow
+  rules:
+    - "allow 22/tcp"
+    - "allow 80/tcp"
+    - "deny from 192.168.1.0/24"

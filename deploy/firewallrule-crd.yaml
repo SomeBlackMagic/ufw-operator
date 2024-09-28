@@ -1,0 +1,58 @@
+# firewallrule-crd.yaml
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: firewallrules.my.firewall
+spec:
+  group: my.firewall
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                nodeSelector:
+                  type: object
+                  additionalProperties:
+                    type: string
+                ufwOptions:
+                  type: object
+                  properties:
+                    logging:
+                      type: string
+                      enum: ["off", "low", "medium", "high", "full"]
+                    defaultPolicies:
+                      type: object
+                      properties:
+                        incoming:
+                          type: string
+                          enum: ["allow", "deny", "reject"]
+                        outgoing:
+                          type: string
+                          enum: ["allow", "deny", "reject"]
+                    profiles:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          action:
+                            type: string
+                            enum: ["allow", "deny"]
+                rules:
+                  type: array
+                  items:
+                    type: string
+  scope: Cluster
+  names:
+    plural: firewallrules
+    singular: firewallrule
+    kind: FirewallRule
+    shortNames:
+    - fwrule
