@@ -10,3 +10,4 @@ sudo sysctl fs.inotify.max_user_instances=512
 kubectl apply -f ../deploy/firewallrule-crd.yaml
 kubectl apply -f ../deploy/firewall-operator-rbac.yaml
 kubectl apply -f ../deploy/firewall-operator-daemonset.yaml
+kubectl apply -f ../examples/all.yaml

@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: firewall-operator
-  namespace: kube-system
+  namespace: default
 spec:
   selector:
     matchLabels:
@@ -22,8 +22,17 @@ spec:
         imagePullPolicy: Always
         securityContext:
           privileged: true
+
         env:
           - name: KUBERNETES_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace

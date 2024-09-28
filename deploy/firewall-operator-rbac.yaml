@@ -1,24 +1,32 @@
-# manifests/firewall-operator-rbac.yaml
+# firewall-operator-rbac.yaml
+
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: firewall-operator
-  namespace: kube-system
+  namespace: default
 
 ---
+
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: firewall-operator
 rules:
   - apiGroups: [""]
-    resources: ["nodes"]
-    verbs: ["get", "list", "watch"]
+    resources: ["nodes", "events", "namespaces", "pods"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+
   - apiGroups: ["my.firewall"]
     resources: ["firewallrules"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 
+  - apiGroups: ["my.firewall"]
+    resources: ["firewallrules/status"]
+    verbs: ["get", "update", "patch"]
+
 ---
+
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -26,7 +34,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: firewall-operator
-    namespace: kube-system
+    namespace: default
 roleRef:
   kind: ClusterRole
   name: firewall-operator
