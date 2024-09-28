@@ -7,7 +7,10 @@ RUN apt-get update && apt-get install -y ufw iptables && \
 COPY requirements.txt /requirements.txt
 RUN pip install --no-cache-dir -r /requirements.txt
 
-COPY src/operator.py /operator.py
+COPY src/ /src/
+
+WORKDIR /src
 
 
-ENTRYPOINT ["kopf", "run", "--standalone", "/operator.py"]
+ENTRYPOINT ["kopf", "run", "--standalone", "main.py"]
+# kopf run --standalone main.py

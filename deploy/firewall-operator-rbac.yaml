@@ -1,4 +1,4 @@
-# firewall-operator-rbac.yaml
+# manifests/firewall-operator-rbac.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -16,7 +16,7 @@ rules:
     verbs: ["get", "list", "watch"]
   - apiGroups: ["my.firewall"]
     resources: ["firewallrules"]
-    verbs: ["get", "list", "watch"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1

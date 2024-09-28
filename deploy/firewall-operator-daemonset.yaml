@@ -22,27 +22,32 @@ spec:
         imagePullPolicy: Always
         securityContext:
           privileged: true
+        env:
+          - name: KUBERNETES_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
         volumeMounts:
-        - name: ufw
-          mountPath: /etc/ufw
-        - name: iptables
-          mountPath: /etc/iptables
-        - name: var-log-ufw
-          mountPath: /var/log/ufw.log
-          readOnly: true
-        - name: proc
-          mountPath: /proc
-          readOnly: true
+          - name: ufw
+            mountPath: /etc/ufw
+          - name: iptables
+            mountPath: /etc/iptables
+          - name: var-log-ufw
+            mountPath: /var/log/ufw.log
+            readOnly: true
+          - name: proc
+            mountPath: /proc
+            readOnly: true
       volumes:
-      - name: ufw
-        hostPath:
-          path: /etc/ufw
-      - name: iptables
-        hostPath:
-          path: /etc/iptables
-      - name: var-log-ufw
-        hostPath:
-          path: /var/log/ufw.log
-      - name: proc
-        hostPath:
-          path: /proc
+        - name: ufw
+          hostPath:
+            path: /etc/ufw
+        - name: iptables
+          hostPath:
+            path: /etc/iptables
+        - name: var-log-ufw
+          hostPath:
+            path: /var/log/ufw.log
+        - name: proc
+          hostPath:
+            path: /proc
