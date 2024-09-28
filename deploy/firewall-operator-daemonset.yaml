@@ -18,7 +18,8 @@ spec:
       hostPID: true
       containers:
       - name: firewall-operator
-        image: myrepo/firewall-operator:latest
+        image: ghcr.io/someblackmagic/ufw-operator:master
+        imagePullPolicy: Always
         securityContext:
           privileged: true
         volumeMounts:
